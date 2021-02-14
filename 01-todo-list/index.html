@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TODO List Vue.js v3</title>
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css"
+        integrity="sha512-oHDEc8Xed4hiW6CxD7qjbnI+B07vDdX7hEPTvn9pSZO1bcRqHp8mj9pyr+8RVC2GmtEfI2Bi9Ke9Ass0as+zpg=="
+        crossorigin="anonymous" />
+    <link rel="stylesheet" href="./app.css">
+</head>
+
+<body>
+    <div id="app">
+        <div class="header">
+            <div class="container">
+                <div class="logo">ToDo List</div>
+                <div class="form">
+                    <input type="text" v-bind:value="input" v-on:input="handle" v-on:keypress.enter="adding">
+                    <button class="btn" v-on:click="adding">Add a new task</button>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+
+            <h2>
+                <span>To Do</span>
+                <span class="mask-num">{{ todo_size }}</span>
+            </h2>
+            <ul class="mask-list">
+                <template v-for="(task, index) in items" :key="task.id">
+                    <li v-if="!task.checked">
+                        <div>
+                            <input type="checkbox" v-on:change="update(index, 'done')" />
+                            <span>{{ task.title }}</span>
+                        </div>
+                        <button class="btn-remove" v-on:click="update(index, 'remove')">Remove</button>
+                    </li>
+                </template>
+            </ul>
+
+            <h2>
+                <span>Done</span>
+                <span class="mask-num">{{ done_size }}</span>
+            </h2>
+            <ul class="mask-list complete-list">
+                <template v-for="(task, index) in items" :key="task.id">
+                    <li v-if="!!task.checked">
+                        <div>
+                            <input type="checkbox" v-on:change="update(index, 'todo')" />
+                            <span>{{ task.title }}</span>
+                        </div>
+                        <button class="btn-remove" v-on:click="update(index, 'remove')">Remove</button>
+                    </li>
+                </template>
+            </ul>
+
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/vue@next"></script>
+    <script src="./app.js"></script>
+</body>
+
+</html>
